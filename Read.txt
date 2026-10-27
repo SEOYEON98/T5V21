@@ -1,0 +1,20 @@
+#
+# Description
+#
+
+# FASAP (Forecasting AI System of Air-quality Pollutant)
+
+# Using algorithm : LSTM (Long-Short Term Memory)
+
+# Using data : Train set (2016.01.01 ~ 2020.12.31)
+               Validation set (2021.01.01 ~ 2021.12.31)
+               Prediction set (2023.01.01 ~ 2023.03.31)
+               Moving 3-month set ([12, 1, 2], [1, 2, 3], [2, 3, 4] ..... [11, 12, 1])
+
+# Variable selection : p-value <= 0.01 / abs(R) >= 0.3
+
+# Model setting :
+ - Layer : 2-stack layer
+ - Activation : tf.sin
+ - Initializer : xavier
+ - Cost function : RMSE (Root Mean Square Error)

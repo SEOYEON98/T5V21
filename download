@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.env
+.env.*
+*.log
+# Large prepared data and binary model artifacts go in a separate data archive.
+*.pickle
+*.pkl
+*.ckpt
+*.meta
+*.index
+*.data-?????-of-?????
