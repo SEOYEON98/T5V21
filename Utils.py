@@ -13,7 +13,6 @@
 
 # -*- coding: utf-8 -*-
 import os
-import sys
 import math
 import shutil
 import calendar
@@ -28,8 +27,7 @@ from sklearn.metrics import mean_squared_error
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-sys.path.append("/DATA/AI-modeling/HSC/T5V21/Code/Module/")
-from Config import MODEL_TIMES, DATA_TYPE
+from Module.Config import MODEL_TIMES, DATA_TYPE
 
 
 # --------------------

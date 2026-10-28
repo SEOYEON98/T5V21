@@ -19,12 +19,13 @@ import sys
 import pickle
 import datetime
 import numpy as np
-import tensorflow as tf
-# sys.path.append("/DATA/AI-modeling/JBLee/Development/AI/LSTM_PM/FASAPv1.0.0/Code/")
 from Module.Config import AREA_GROUP, season_month, DeviceNumber, ABS_PATH, SAVE_PATH, MINMAX_PATH, LOG_PATH, batch_size, state_sizes, MODEL_TIMES, counts
+# Device selection is optional and must precede the TensorFlow import.
+if DeviceNumber is not None:
+    os.environ['CUDA_VISIBLE_DEVICES'] = DeviceNumber
+import tensorflow as tf
 from Module.Utils import TotalDate, Read, Normalization, MakeNormalizedFiles, Directory, EarlyStopping, Noise, FileSave, FileDelete
 from Module.Model import LSTM, RMSE
-os.environ["CUDA_VISIBLE_DEVICES"] = DeviceNumber
 
 import warnings
 warnings.filterwarnings("ignore", category=RuntimeWarning)
@@ -58,7 +59,7 @@ LogPath = LOG_PATH.replace('{{RunTime}}', RT).replace('{{PM}}', PM_dn)
 Log = open(LogPath + '{}_TrainLog.txt'.format(A), 'a')
 
 # Data load #
-DICT_PATH = ABS_PATH + "Data/ConcatData/"
+DICT_PATH = os.path.join(ABS_PATH, 'Data', 'ConcatData') + os.sep
 with open(DICT_PATH + "data_{}h.pickle".format(RT), "rb") as fr:
     data = pickle.load(fr)
 

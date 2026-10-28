@@ -44,10 +44,11 @@ T5V21/
 │       ├── Model.py                # Encoder–decoder LSTM model
 │       └── Utils.py                # Data preparation and evaluation utilities
 ├── README.md
+├── check_paths.py                    # Read-only extraction/path check
 ├── LICENSE                          # MIT License for source code
 ├── DATA_LICENSE.md                 # CC BY 4.0 terms for release data/results
 ├── Read.txt                        # Legacy project description
-└── CHANGELOG_EMS.md                # Explanation of year-setting changes
+└── CHANGELOG_EMS.md                # Date corrections and portability edits
 ```
 
 This repository provides the **source-code package**. The required input data, pretrained checkpoints and evaluation outputs are distributed separately as GitHub Release assets (`T5V21_Data.zip` and `T5V21_Result.zip`). The research team has supplied the GitHub Release link for these archives: [`data-v1`](https://github.com/SEOYEON98/T5V21/releases/tag/data-v1).
@@ -120,12 +121,80 @@ uncompressed form and exceeds standard Git file size limits; the release
 archive allows data to be distributed separately from source code.
 Do not load pickle files from untrusted sources.
 
+### Portable path configuration (2026 EMS code update)
+
+The code uses the following structure **after the two Release archives are extracted**:
+
+```text
+T5V21/
+├── Code/
+├── Data/
+│   ├── ConcatData/data_09h.pickle
+│   ├── RawData/09h/...
+│   └── 09h/PM2.5/SU/...           # Encoder/Decoder/Targets scaling files
+├── Result/
+│   ├── WeightFile/09h/PM2.5/SU/... # Pretrained TensorFlow checkpoints
+│   ├── TestResult/...
+│   └── Evaluation/...
+├── README.md
+└── LICENSE
+```
+
+`Code/Module/Config.py` determines the working root from its own location,
+not from the current shell directory. If data and results live elsewhere,
+set `T5V21_ROOT` to the directory containing both `Data/` and `Result/`;
+`Code/` must still be available from the working repository. Paths ending in
+`/` are retained internally because the original scripts concatenate paths
+and filenames.
+
+The following **optional** environment variables are supported:
+
+| Variable | Purpose | Default |
+| --- | --- | --- |
+| `T5V21_ROOT` | Root containing `Data/` and `Result/` | The checked-out repository root |
+| `T5V21_CUDA_DEVICES` | CUDA visible-device IDs | Unset (do not override TensorFlow device visibility) |
+| `T5V21_NIER_SOURCE` | Input template for the optional raw source extraction script | `Data/SourceData/NIER/{{RUN_TIME}}h/{{TYPE}}/` |
+| `T5V21_ANYANG_SOURCE` | Historical Anyang observation source template | `Data/SourceData/Anyang/{{RUN_TIME}}h/{{TYPE}}/` |
+
+Examples:
+
+```bash
+# Optional: select GPU 0 on a system with CUDA-compatible hardware.
+export T5V21_CUDA_DEVICES=0
+
+# Optional: if Data/ and Result/ are stored on another mounted drive.
+export T5V21_ROOT=/path/to/T5V21
+
+# Run from the repository root first to verify extracted folders.
+python check_paths.py
+
+cd Code
+python 05_Performance.py
+python 04_Evaluation.py
+```
+
+The `01_DataBaseExtract.py` step requires historical NIER and Anyang **source
+files** that are not necessarily contained in the published prepared-data
+archives. It is **not needed** when the prepared `Data/` files are available.
+If running extraction, supply accessible source-template directories through
+the two environment variables above. The `02_TrainExecutive.py` script uses
+the same Python interpreter for its training subprocess, even if it is launched
+from another directory. **Training and prediction scripts can create, replace
+or delete output files; preserve original data and model checkpoints in a
+backup before running them.**
+
+**Release archive layout:** Confirm that the extracted ZIPs actually create
+`Data/` and `Result/` at the chosen root. If an archive contains an extra
+wrapper directory, move its enclosed folders to match the tree shown above.
+The released model weights and the amended 2016–2020/2021 date settings have
+not been independently checked for numerical identity.
+
 To run the code after obtaining the required data and checkpoints:
 
-1. Set working-directory paths and required input/output directories in `Code/Module/Config.py` and correct any legacy absolute imports in `Code/Module/Utils.py`.
+1. Download `T5V21_Data.zip` and `T5V21_Result.zip` from the linked GitHub Release. Extract their `Data/` and `Result/` folder trees alongside `Code/` at the repository root. The code now derives paths from the repository root automatically; no NIER-specific absolute path is required for the prepared-data workflow.
 2. Use a compatible Python 3.5.2 / TensorFlow 1.8.0 environment; configure CUDA appropriately if running with a GPU. Other dependency versions must be selected for compatibility with this historical environment.
 3. Ensure that the prepared data, input-scaling metadata and trained model checkpoints exist under the paths expected by the scripts.
-4. From the `Code` directory, review the output paths and selected evaluation year, then run the appropriate entry point:
+4. From the `Code` directory, review the selected evaluation year, then run the appropriate entry point:
 
 ```bash
 # Prediction with pretrained model weights (requires external data/checkpoints)
@@ -138,7 +207,7 @@ python 04_Evaluation.py
 python 02_TrainExecutive.py
 ```
 
-The prediction script may overwrite an existing output file. Run it using a working copy. The legacy configuration contains institution-specific absolute file paths and device selection; these must be adapted on other systems. The authors report successful prediction and evaluation in their computational environment; **this newly dated code-only distribution has not been independently executed in a clean environment**.
+The prediction script may overwrite an existing output file. Run it using a working copy. The packaged code uses project-relative paths, and GPU selection is optional. The historical TensorFlow/Python dependencies still require a compatible environment. The authors report successful prediction and evaluation in their computational environment; **this newly dated code-only distribution has not been independently executed in a clean environment**.
 
 ## Evaluation outputs
 

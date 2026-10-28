@@ -16,14 +16,13 @@
 #
 import os
 import sys
-# sys.path.append("/DATA/AI-modeling/JBLee/Development/AI/LSTM/FASAPv1.0.0/Code/")
 from Module.Utils import DB_COPY, ANYANG_DB_COPY, FORECAST_VALUE_CHANGE, FORECAST03_CHANGE, OBS_VALUE_CHANGE
 from Module.Config import ABS_PATH, NIER_DB_DATA_PATH, AU_DB_DATA_PATH, MODEL_TIMES, AREAS, DATA_TYPE
 
 # ---------------------------------
 # Set path.
 #
-NIER_OUT_PATH = os.path.join(ABS_PATH, "Data/RawData/{{RUN_TIME}}h/{{TYPE}}/")
+NIER_OUT_PATH = os.path.join(ABS_PATH, 'Data', 'RawData', '{{RUN_TIME}}h', '{{TYPE}}') + os.sep
 
 # ---------------------------------
 # DB data preprocessing.

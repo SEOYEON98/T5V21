@@ -19,13 +19,26 @@ import os
 # --------------------
 # Set path.
 #
-ABS_PATH = '/DATA/AI-modeling/HSC/T5V21/'
-NIER_DB_DATA_PATH = "/DATA/AI-modeling/Anyang/AIFM/interface/nier/LearningDataRnn1_7/{{RUN_TIME}}h/{{TYPE}}/"
-AU_DB_DATA_PATH = "/DATA/AI-modeling/Anyang/AIFM/interface/nier/LearningDataDnn1/Backup/ANYANG_DATA/{{RUN_TIME}}h/{{TYPE}}/"
-RAW_DATA_PATH = os.path.join(ABS_PATH, 'Data/RawData/{{RunTime}}h/')
-MINMAX_PATH = os.path.join(ABS_PATH, 'Data/{{RunTime}}h/{{PM}}/{{Area}}/{{Season}}/{{Day}}/')
-LOG_PATH = os.path.join(ABS_PATH, 'Result/Log/{{RunTime}}h/{{PM}}/')
-SAVE_PATH = os.path.join(ABS_PATH, 'Result/WeightFile/{{RunTime}}h/{{PM}}/{{Area}}/{{Season}}/{{Day}}/')
+# Resolve paths relative to the checked-out repository, rather than a NIER
+# server mount. A different local root may be set with T5V21_ROOT.
+# Keep a trailing separator: legacy scripts concatenate these paths with names.
+_DEFAULT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+ABS_PATH = os.path.abspath(os.path.expanduser(os.environ.get('T5V21_ROOT', _DEFAULT_ROOT))) + os.sep
+
+# The extraction step (01_DataBaseExtract.py) requires original NIER/Anyang
+# source directories. They are optional if prepared Data/ and Result/ archives
+# were downloaded from the public release. Environment variables can point to
+# those source directories without changing the tracked code.
+def _source_template(env_name, *parts):
+    return os.path.normpath(os.path.expanduser(
+        os.environ.get(env_name, os.path.join(ABS_PATH, *parts)))) + os.sep
+
+NIER_DB_DATA_PATH = _source_template('T5V21_NIER_SOURCE', 'Data', 'SourceData', 'NIER', '{{RUN_TIME}}h', '{{TYPE}}')
+AU_DB_DATA_PATH = _source_template('T5V21_ANYANG_SOURCE', 'Data', 'SourceData', 'Anyang', '{{RUN_TIME}}h', '{{TYPE}}')
+RAW_DATA_PATH = os.path.join(ABS_PATH, 'Data', 'RawData', '{{RunTime}}h') + os.sep
+MINMAX_PATH = os.path.join(ABS_PATH, 'Data', '{{RunTime}}h', '{{PM}}', '{{Area}}', '{{Season}}', '{{Day}}') + os.sep
+LOG_PATH = os.path.join(ABS_PATH, 'Result', 'Log', '{{RunTime}}h', '{{PM}}') + os.sep
+SAVE_PATH = os.path.join(ABS_PATH, 'Result', 'WeightFile', '{{RunTime}}h', '{{PM}}', '{{Area}}', '{{Season}}', '{{Day}}') + os.sep
 
 # --------------------
 # Set common parameters.
@@ -71,4 +84,5 @@ Drop = ['PM10_', 'PM2.5_', 'hpa_W', 'f_gpm', 'f_RN_ACC', 'f_MH', 'O_radiation', 
 # Set train parameters.
 #
 counts, batch_size, state_sizes = 5, 64, [96, 96]
-DeviceNumber = "3"
+# Optional GPU selection; unset means use TensorFlow's default visible devices.
+DeviceNumber = os.environ.get('T5V21_CUDA_DEVICES')

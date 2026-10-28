@@ -19,12 +19,14 @@ import sys
 import shutil
 import pickle
 import numpy as np
-import tensorflow as tf
+from Module.Config import MODEL_TIMES, PM_DIR, ABS_PATH, SAVE_PATH, MINMAX_PATH, season_box, month_box, batch_size, state_sizes, DeviceNumber
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+# Optional device selection must precede the TensorFlow import.
+if DeviceNumber is not None:
+    os.environ['CUDA_VISIBLE_DEVICES'] = DeviceNumber
+import tensorflow as tf
 from Module.Utils import ConcatData, InverseNormalization, PreRead, TotalDate, Directory
-from Module.Config import MODEL_TIMES, PM_DIR, ABS_PATH, SAVE_PATH, MINMAX_PATH, season_box, month_box, batch_size, state_sizes
 from Module.Model import LSTM
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
 
 """ SET PARAMETERS """
 PM = 'PM2.5'
@@ -35,7 +37,7 @@ target_year = 2024
 # ---------------------------------
 # Set path.
 #
-result_file_path = os.path.join(ABS_PATH, 'Result/TestResult/{{PM}}/')
+result_file_path = os.path.join(ABS_PATH, 'Result', 'TestResult', '{{PM}}') + os.sep
 
 # ---------------------------------
 # Set test date.
@@ -45,7 +47,7 @@ _, predict_date = TotalDate(start_date='20240101', end_date='20240331')
 # Predict #
 for RT in sorted(MODEL_TIMES.keys())[1:2]:
     # Data load #
-    DICT_PATH = ABS_PATH + "Data/ConcatData/"
+    DICT_PATH = os.path.join(ABS_PATH, 'Data', 'ConcatData') + os.sep
     with open(DICT_PATH + "data_{}h.pickle".format(RT), "rb") as fr:
         data_dict = pickle.load(fr)
 

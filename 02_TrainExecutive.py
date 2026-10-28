@@ -16,10 +16,10 @@
 #
 import os
 import sys
+import subprocess
 import pickle
 import numpy as np
 import datetime as d
-# sys.path.append("/DATA/AI-modeling/JBLee/Development/AI/LSTM_PM/FASAPv1.0.0/Code/")
 from Module.Config import ABS_PATH, RAW_DATA_PATH, LOG_PATH, PMS, AREAS, MODEL_TIMES, Drop, month_box, season_box
 from Module.Utils import TotalDate, ConcatData, InputSet, Directory
 
@@ -35,7 +35,7 @@ Train = True
 # Run code.
 #
 if make_data:
-    DICT_PATH = ABS_PATH + "Data/ConcatData/"
+    DICT_PATH = os.path.join(ABS_PATH, 'Data', 'ConcatData') + os.sep
     Directory(path=DICT_PATH, remove=False, make=True)
     for PM in PMS[0:1]:
 
@@ -85,6 +85,6 @@ if Train:
                         print("Train parameter ::: PM={} / ModelTime={} / Area={} / Season={} / TargetDay={}".format(PM, RT, A, season, DAY_N))
                         key_value = [PM, RT, A, season, DAY_N]
                         ARG_DICT.append({at: k for at, k in zip(key_name, key_value)})
-                        os.system('python 03_TrainCode.py {} {} {} {} {}'.format(PM, RT, A, season, DAY_N))
+                        subprocess.check_call([sys.executable, os.path.join(os.path.dirname(__file__), '03_TrainCode.py'), PM, RT, A, season, DAY_N])
                         print("\n")
                         print("\n", file=LogFile)

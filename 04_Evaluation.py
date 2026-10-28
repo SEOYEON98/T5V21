@@ -18,7 +18,6 @@ import os
 import sys
 import numpy as np
 import pandas as pd
-# sys.path.append("/DATA/AI-modeling/JBLee/Development/AI/LSTM_PM/FASAPv1.0.0/Code/")
 from Module.Config import MODEL_TIMES, PMS, ABS_PATH
 from Module.Utils import ConcatData, InverseNormalization, PreRead, TotalDate, Directory, CategoryEvaluation, StatisticalEvaluation
 
@@ -29,8 +28,8 @@ EVAL_YEAR = 2024
 TimeEval    = True
 DayEval     = True
 SectionEval = True
-CONC_PATH = os.path.join(ABS_PATH + "Result/TestResult/{{PM}}/")
-RESULT_PATH = os.path.join(ABS_PATH + "Result/Evaluation/{{PM}}/")
+CONC_PATH = os.path.join(ABS_PATH, 'Result', 'TestResult', '{{PM}}') + os.sep
+RESULT_PATH = os.path.join(ABS_PATH, 'Result', 'Evaluation', '{{PM}}') + os.sep
 for PM in PMS[0:1]:
     if PM == 'PM2_5': pm_name = 'PM2.5'
     if PM == 'PM10' : pm_name = 'PM10'
