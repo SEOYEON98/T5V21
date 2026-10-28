@@ -25,7 +25,7 @@ The current code package focuses on the `SU` region, the `09h` forecast configur
 | Other Python dependencies | NumPy, pandas, SciPy, scikit-learn; additional imports are defined in the source scripts |
 | Software documentation | This README and the included source-code comments |
 | Code access cost | The public GitHub repository can be browsed and downloaded without charge |
-| Software licence | No reuse licence is currently declared in this repository; see **Licence and reuse** below |
+| Software licence | MIT License (see `LICENSE`; confirm institutional copyright-holder designation before release) |
 
 The original model was developed in a Linux-based computing environment. The operating system and GPU model used for the original training have not been documented. The configuration above is the **researcher-reported development environment**, not a claim that the source has been retested on the current server or on every platform.
 
@@ -44,11 +44,13 @@ T5V21/
 │       ├── Model.py                # Encoder–decoder LSTM model
 │       └── Utils.py                # Data preparation and evaluation utilities
 ├── README.md
+├── LICENSE                          # MIT License for source code
+├── DATA_LICENSE.md                 # CC BY 4.0 terms for release data/results
 ├── Read.txt                        # Legacy project description
 └── CHANGELOG_EMS.md                # Explanation of year-setting changes
 ```
 
-This is the **code-only release**. The original working archive additionally contained prepared input data, per-model feature/scaling files, trained TensorFlow checkpoints and evaluation outputs. These are needed for reproducing saved-model predictions but are **not included in the small GitHub code package**.
+This repository provides the **source-code package**. The required input data, pretrained checkpoints and evaluation outputs are distributed separately as GitHub Release assets (`T5V21_Data.zip` and `T5V21_Result.zip`). These assets remain in **draft** status until the release is published and are not yet publicly downloadable.
 
 ## Model and experiment configuration
 
@@ -101,9 +103,23 @@ Unit examples above were provided by the researchers; the precise units for othe
 
 ## Obtaining the data and running the code
 
-**Data availability:** As of this code-only release, the data needed to run the full prediction/evaluation workflow and the pretrained checkpoint files have **not been deposited in a linked public data repository**. The research team has indicated that the training/validation datasets may be publicly released. The dataset and checkpoint access information must be updated here when the public deposit is completed. The public code repository alone is **not a self-contained reproduction package**.
+**Data availability:** The research data and associated result archives have been
+uploaded as GitHub Release **draft assets**, under the names
+`T5V21_Data.zip` and `T5V21_Result.zip`. **These assets are not publicly
+downloadable while the release remains a draft.** Once the release has
+been published, add the public release URL here and to the manuscript's
+Software and Data Availability statement.
 
-A prepared file in the original working archive, `Data/ConcatData/data_09h.pickle`, is about 518 MiB and exceeds GitHub's standard single-file Git limit. A research data repository such as Zenodo, with a link from this README, is therefore suitable. Never load an untrusted pickle file.
+- Source code: https://github.com/SEOYEON98/T5V21
+- Data and result files: GitHub Release (draft; public release URL to be added after publication)
+- Data and results reuse terms: CC BY 4.0 (see `DATA_LICENSE.md`, subject to
+  confirmation that all included materials can be distributed under these terms)
+
+A prepared data file in the original working archive,
+`Data/ConcatData/data_09h.pickle`, is approximately 518 MiB in
+uncompressed form and exceeds standard Git file size limits; the release
+archive allows data to be distributed separately from source code.
+Do not load pickle files from untrusted sources.
 
 To run the code after obtaining the required data and checkpoints:
 
@@ -131,10 +147,26 @@ The existing result-table format uses `Date`, `Time`, `Target`, `AI`, and `CMAQ`
 
 ## Licence and reuse
 
-The repository is publicly accessible, but **no software reuse licence has yet been specified**. Public GitHub visibility is not itself an open-source licence. Code reuse and redistribution rights should be established through a licence approved by NIER; data may have separate licence or attribution conditions. This section should be replaced by the actual licence and dataset use terms before final journal submission.
+The **Python source code and associated software documentation** are
+provided under the [MIT License](LICENSE). The separately distributed
+**research data and associated model/result artifacts** are intended to
+be provided under [CC BY 4.0](DATA_LICENSE.md), subject to the stated
+rights and publication checks.
+
+Users do not need to request individual permission to use, modify or
+redistribute material covered by these licences, provided that they
+observe the respective licence conditions. Users of the data must
+attribute NIER and indicate changes where applicable. Neither licence
+constitutes an endorsement by NIER.
+
+The copyright-holder line in the MIT `LICENSE` file is proposed as
+**National Institute of Environmental Research (NIER)**; confirm that
+this institutional designation and the right to grant these licences
+are correct before treating the files as final. GitHub Release assets
+are not publicly accessible until the draft is published.
 
 ## Citation and manuscript availability statement
 
 Software: **T5V21**, developed by SEOYEON KIM, National Institute of Environmental Research (NIER), Republic of Korea. Source code: https://github.com/SEOYEON98/T5V21 (public repository, 27 October 2026). Contact: ksy0720@korea.kr.
 
-For the *Environmental Modelling & Software* manuscript, include a separate bulleted **Software and Data Availability** subsection after the Highlights. The manuscript must state the actual dataset access URL and reuse conditions when available; this README does not substitute for that section.
+For the *Environmental Modelling & Software* manuscript, include a separate bulleted **Software and Data Availability** subsection after the Highlights. The manuscript must state the actual public dataset/release URL and the relevant reuse conditions after publication; this README does not substitute for that section.
