@@ -25,7 +25,7 @@ The current code package focuses on the `SU` region, the `09h` forecast configur
 | Other Python dependencies | NumPy, pandas, SciPy, scikit-learn; additional imports are defined in the source scripts |
 | Software documentation | This README and the included source-code comments |
 | Code access cost | The public GitHub repository can be browsed and downloaded without charge |
-| Software licence | MIT License (see `LICENSE`; confirm institutional copyright-holder designation before release) |
+| Software licence | MIT License (see [`LICENSE`](LICENSE)) |
 
 The original model was developed in a Linux-based computing environment. The operating system and GPU model used for the original training have not been documented. The configuration above is the **researcher-reported development environment**, not a claim that the source has been retested on the current server or on every platform.
 
@@ -50,7 +50,7 @@ T5V21/
 └── CHANGELOG_EMS.md                # Explanation of year-setting changes
 ```
 
-This repository provides the **source-code package**. The required input data, pretrained checkpoints and evaluation outputs are distributed separately as GitHub Release assets (`T5V21_Data.zip` and `T5V21_Result.zip`). These assets remain in **draft** status until the release is published and are not yet publicly downloadable.
+This repository provides the **source-code package**. The required input data, pretrained checkpoints and evaluation outputs are distributed separately as GitHub Release assets (`T5V21_Data.zip` and `T5V21_Result.zip`). The research team has supplied the GitHub Release link for these archives: [`data-v1`](https://github.com/SEOYEON98/T5V21/releases/tag/data-v1).
 
 ## Model and experiment configuration
 
@@ -103,17 +103,16 @@ Unit examples above were provided by the researchers; the precise units for othe
 
 ## Obtaining the data and running the code
 
-**Data availability:** The research data and associated result archives have been
-uploaded as GitHub Release **draft assets**, under the names
-`T5V21_Data.zip` and `T5V21_Result.zip`. **These assets are not publicly
-downloadable while the release remains a draft.** Once the release has
-been published, add the public release URL here and to the manuscript's
-Software and Data Availability statement.
+**Data availability:** The T5V21 input data and associated pretrained-model and result archives are distributed separately through the GitHub Release `data-v1`.
 
-- Source code: https://github.com/SEOYEON98/T5V21
-- Data and result files: GitHub Release (draft; public release URL to be added after publication)
-- Data and results reuse terms: CC BY 4.0 (see `DATA_LICENSE.md`, subject to
-  confirmation that all included materials can be distributed under these terms)
+- **Source code:** https://github.com/SEOYEON98/T5V21
+- **Data and model/result release:** https://github.com/SEOYEON98/T5V21/releases/tag/data-v1
+- **Research dataset:** `T5V21_Data.zip`
+- **Pretrained-model and evaluation results:** `T5V21_Result.zip`
+- **Software license:** MIT License ([`LICENSE`](LICENSE))
+- **Data and associated model/result archive license:** Creative Commons Attribution 4.0 International ([`DATA_LICENSE.md`](DATA_LICENSE.md))
+
+Users can obtain the code from the main repository and access the data and result archives from the linked release. Reuse is permitted without individual permission, subject to the applicable licence's attribution and notice requirements. The links and files should be checked for public download access after publishing the release.
 
 A prepared data file in the original working archive,
 `Data/ConcatData/data_09h.pickle`, is approximately 518 MiB in
@@ -147,11 +146,7 @@ The existing result-table format uses `Date`, `Time`, `Target`, `AI`, and `CMAQ`
 
 ## Licence and reuse
 
-The **Python source code and associated software documentation** are
-provided under the [MIT License](LICENSE). The separately distributed
-**research data and associated model/result artifacts** are intended to
-be provided under [CC BY 4.0](DATA_LICENSE.md), subject to the stated
-rights and publication checks.
+The **Python source code and associated software documentation** are provided under the [MIT License](LICENSE). The separately distributed **research data and associated model/result artifacts** are provided under [CC BY 4.0](DATA_LICENSE.md).
 
 Users do not need to request individual permission to use, modify or
 redistribute material covered by these licences, provided that they
@@ -159,14 +154,10 @@ observe the respective licence conditions. Users of the data must
 attribute NIER and indicate changes where applicable. Neither licence
 constitutes an endorsement by NIER.
 
-The copyright-holder line in the MIT `LICENSE` file is proposed as
-**National Institute of Environmental Research (NIER)**; confirm that
-this institutional designation and the right to grant these licences
-are correct before treating the files as final. GitHub Release assets
-are not publicly accessible until the draft is published.
+The copyright-holder designation in the MIT `LICENSE` file is **National Institute of Environmental Research (NIER)**. Reuse conditions for the dataset and model/result archives are specified in `DATA_LICENSE.md`.
 
 ## Citation and manuscript availability statement
 
 Software: **T5V21**, developed by SEOYEON KIM, National Institute of Environmental Research (NIER), Republic of Korea. Source code: https://github.com/SEOYEON98/T5V21 (public repository, 27 October 2026). Contact: ksy0720@korea.kr.
 
-For the *Environmental Modelling & Software* manuscript, include a separate bulleted **Software and Data Availability** subsection after the Highlights. The manuscript must state the actual public dataset/release URL and the relevant reuse conditions after publication; this README does not substitute for that section.
+Data and model/result release: https://github.com/SEOYEON98/T5V21/releases/tag/data-v1. For the *Environmental Modelling & Software* manuscript, include a separate bulleted **Software and Data Availability** subsection after the Highlights. This README does not substitute for the journal manuscript section.
